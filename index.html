@@ -17,6 +17,7 @@
             flex-direction: column;
             text-align: center;
             padding-top: 50px; /* Додаємо відступ з верхньої частини */
+            overflow: hidden; /* Запобігаємо прокручуванню */
         }
         .error {
             font-size: 100px;
@@ -143,6 +144,19 @@
             // Просто змінюється текст
             muteButton.innerText = muteButton.innerText === "🔇 Mute" ? "🔊 Unmute" : "🔇 Mute";
         }
+
+        // Запобігаємо оновленню сторінки при прокручуванні вниз
+        window.addEventListener('touchmove', function(event) {
+            event.preventDefault();
+        });
+
+        window.addEventListener('wheel', function(event) {
+            event.preventDefault();
+        });
+
+        window.addEventListener('gesturestart', function(event) {
+            event.preventDefault();
+        });
     </script>
 
 </body>
