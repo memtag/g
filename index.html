@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: flex-start; /* Вирівнювання елементів по верху */
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            text-align: center;
+            padding-top: 50px; /* Додаємо відступ з верхньої частини */
+        }
+        .error {
+            font-size: 100px;
+            display: inline-block;
+            width: 150px;
+            height: 150px;
+            line-height: 150px;
+            border-radius: 50%;
+            background-color: transparent;
+            color: #ffcc00;
+            margin-bottom: 20px;
+            border: 3px solid #ffcc00;
+        }
+        .image-container {
+            display: none;
+            position: relative;
+        }
+        .image-container img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+        }
+        .mute-button {
+            background-color: #333;
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 20px;
+            margin-top: 10px;
+            display: none; /* Спочатку кнопка не видима */
+        }
+        .audio {
+            display: none;
+        }
+        #error-text {
+            font-size: 18px;
+            color: white;
+            margin-bottom: 20px;
+        }
+        .links-container {
+            margin-top: 20px;
+            display: none; /* Спочатку лінки не видимі */
+        }
+        .links-container a {
+            color: white;
+            background-color: #333;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Символ помилки з текстом -->
+    <div class="error" id="error-message">⚠</div>
+    <div id="error-text">Сталася невідома помилка</div>
+
+    <!-- Контейнер для зображення -->
+    <div class="image-container">
+        <img src="image.jpg" alt="Image">
+        <button class="mute-button" onclick="muteAudio()">🔇 Mute</button>
+    </div>
+
+    <!-- Звук -->
+    <audio class="audio" id="audio" src="sound.mp3" loop autoplay></audio>
+
+    <!-- Контейнер для лінків -->
+    <div class="links-container">
+        <a href="https://t.me/mem_soundtag" target="_blank">Telegram</a>
+        <a href="https://tiktok.com/@mem.tag" target="_blank">TikTok</a>
+    </div>
+
+    <script>
+        let errorElement = document.getElementById('error-message');
+        let errorText = document.getElementById('error-text');
+        let imageContainer = document.querySelector('.image-container');
+        let muteButton = document.querySelector('.mute-button');
+        let audio = document.getElementById('audio');
+        let isMuted = false;
+        let linksContainer = document.querySelector('.links-container');
+
+        // Визначення мови користувача
+        const userLang = navigator.language || navigator.userLanguage;
+
+        // Мови
+        const messages = {
+            'uk': 'Сталася невідома помилка',
+            'en': 'An unknown error occurred',
+            'ru': 'Произошла неизвестная ошибка',
+            'de': 'Ein unbekannter Fehler ist aufgetreten',
+            'fr': 'Une erreur inconnue est survenue',
+            'es': 'Ocurrió un error desconocido'
+        };
+
+        // Встановлюємо текст помилки в залежності від мови
+        errorText.innerText = messages[userLang.substring(0, 2)] || messages['en'];
+
+        // При кліці на екран чи символ помилки
+        document.body.addEventListener('click', function() {
+            errorElement.style.display = 'none'; // Сховати символ помилки
+            errorText.style.display = 'none'; // Сховати текст помилки
+            imageContainer.style.display = 'block'; // Показати зображення
+
+            // Вмикаємо звук
+            if (audio.paused) {
+                audio.play();
+            }
+
+            // Показати кнопку Mute після натискання
+            muteButton.style.display = 'block';
+
+            // Показати лінки на канали після натискання
+            linksContainer.style.display = 'block';
+        });
+
+        // Функція для кнопки Mute (не робоча, для краси)
+        function muteAudio() {
+            // Кнопка не має функціональності
+            // Просто змінюється текст
+            muteButton.innerText = muteButton.innerText === "🔇 Mute" ? "🔊 Unmute" : "🔇 Mute";
+        }
+    </script>
+
+</body>
+</html>
